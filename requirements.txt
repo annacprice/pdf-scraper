@@ -1,0 +1,5 @@
+pdfminer.six
+chardet
+pillow
+pytesseract
+pdf2image
