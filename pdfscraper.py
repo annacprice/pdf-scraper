@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from io import StringIO
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
@@ -11,6 +13,7 @@ from os import listdir
 from os.path import isfile, join
 import sys, getopt
 import re
+import argparse
 
 #------------------------------------------------------------------------------
 def convert_pdf(fname, pages=None): # pdfminer
@@ -65,12 +68,11 @@ def txt_process(in_pdf, out_txt):
    message = ""
    
    for pdf in os.listdir(in_pdf):
-
         fileExtension = pdf.split(".")[-1]
         if fileExtension == "pdf":
             pdfFile = in_pdf + pdf
             message = convert_pdf(pdfFile)
-            #if pdfminer returns blank string then try pytesseract
+            # if pdfminer returns blank string then try pytesseract
             if not message.strip():
                 message = convert_pdf_ocr(pdfFile)
 
@@ -80,15 +82,21 @@ def txt_process(in_pdf, out_txt):
             txtFile = open(txtFile, "w")
             txtFile.write(message)
 
-   
 #-------------------------------------------------------------------------------
-def main(argv):
-    # set input (pdf) and output (txt) directory
-    in_pdf = "/data/"
-    out_txt = "/data/output/"
-  
-    
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--input-dir", dest="inpdf", 
+            help="Path to the input pdf files")
+    parser.add_argument("-o", "--output-dir", dest="outtxt",
+            help="Path for the output txt files")
+
+    args = parser.parse_args()
+
+    in_pdf = args.inpdf
+    out_txt = args.outtxt
+
     txt_process(in_pdf, out_txt)
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
+
