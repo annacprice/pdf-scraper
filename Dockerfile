@@ -1,6 +1,6 @@
 FROM python:3.6-alpine
 
-COPY src/ /app
+COPY pdfscraper.py /app
 
 WORKDIR /app
 
