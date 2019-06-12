@@ -76,7 +76,7 @@ def txt_process(in_pdf, out_txt):
             if not message.strip():
                 message = convert_pdf_ocr(pdfFile)
 
-            message = re.findall(r"\w+(?:[-']\w+)*|'|[-.(]+|\S\w*", message)
+            message = re.findall(r"\w+(?:['-/]\w+)|\w+[?!.,:)(]|\S\w*", message)
             message = " ".join(str(e) for e in message)
             txtFile = out_txt + pdf + ".txt"
             txtFile = open(txtFile, "w")
