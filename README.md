@@ -34,7 +34,7 @@ optional arguments:
 
 E.g. To run
 ```
-python pdfscraper.py -i /path/to/input/pdfs/ -o /path/to/output/directory/
+python pdfscraper.py -i /path/to/input/pdfs -o /path/to/output/directory
 ```
 
 ## **Docker**
@@ -42,5 +42,5 @@ Alternatively, the accompanying Dockerfile can be used to run the program in a d
 
 E.g. To run
 ```
-docker run -v "/path/to/input/pdfs:/data" --rm pdfscraper:latest -i /data/ -o /data/
+docker run -v "/path/to/input/pdfs:/data" --rm pdfscraper:latest -i /data -o /data
 ```
