@@ -1,8 +1,8 @@
 FROM python:3.6-alpine
 
-COPY pdfscraper.py /home
+WORKDIR /app
 
-WORKDIR /home
+COPY pdfscraper.py /app
 
 RUN apk update --no-cache && apk upgrade --no-cache && apk add --update --no-cache &&\ 
 apk add --no-cache --update build-base &&\
