@@ -21,7 +21,7 @@ Install of [Google Tesseract OCR](https://github.com/tesseract-ocr/tesseract) an
 
 ## **Usage**
 ```
-usage: pdfscraper.py [-h] [-i INPDF] [-o OUTTXT]
+usage: pdfscraper.py [-h] -i INPDF -o OUTTXT [-t]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -29,13 +29,19 @@ optional arguments:
                         Path to the input pdf files
   -o OUTTXT, --output-dir OUTTXT
                         Path for the output txt files
+  -t, --token-gen       Use flag to generate tokenized output
 ```
-
 
 E.g. To run
 ```
 python pdfscraper.py -i /path/to/input/pdfs -o /path/to/output/directory
 ```
+
+PDFscraper also has an optional flag -t, which produces tokenized text for use in Natural Language Processing (NLP) tasks. E.g. to produce tokenized output:
+```
+python pdfscraper.py -i /path/to/input/pdfs -o /path/to/output/directory -t
+```
+
 
 ## **Docker**
 Alternatively, the accompanying Dockerfile can be used to run the program in a docker container.
