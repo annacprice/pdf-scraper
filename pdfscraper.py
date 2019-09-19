@@ -76,6 +76,10 @@ def txt_process(in_pdf, out_txt, token=None): # process text
                 message = re.findall(r"\w+(?:[-']\w+)*|'|[-.(]+|\S\w*", message)
                 message = " ".join(str(e) for e in message)
                 message = message.lower()
+                message = re.sub(r"[^\w\s]+", "", message)
+                message = re.sub(r"\_", "", message)
+                message = re.sub(r"\w*[\d.\-]\w*", "", message)
+                message = re.sub(r"\b\d+\b", "", message)
             else:
             	message = re.findall(r"\w+(?:['-/]\w+)|\w+[?!.,:)(]|\S\w*", message)
             	message = " ".join(str(e) for e in message)
