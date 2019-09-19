@@ -30,7 +30,6 @@ def convert_pdf(fname, pages=None): # pdfminer
     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
     interpreter = PDFPageInterpreter(rsrcmgr, device)
 
-
     infile = open(fname, "rb")
 
     for page in PDFPage.get_pages(infile, pagenums, check_extractable=False):
@@ -39,6 +38,7 @@ def convert_pdf(fname, pages=None): # pdfminer
     device.close()
     message = retstr.getvalue()
     retstr.close
+
     return message
 
 def convert_pdf_ocr(fname): # pytesseract for ocr support
@@ -59,7 +59,7 @@ def convert_pdf_ocr(fname): # pytesseract for ocr support
     
     return message
 
-def txt_process(in_pdf, out_txt, token): # process text
+def txt_process(in_pdf, out_txt, token=None): # process text
    
    message = ""   
    for pdf in os.listdir(in_pdf):
@@ -72,11 +72,13 @@ def txt_process(in_pdf, out_txt, token): # process text
             if not message.strip():
                 message = convert_pdf_ocr(pdfFile)
             # select regex for tokenization or standard text 
-            if token == "True":
+            if token:
                 message = re.findall(r"\w+(?:[-']\w+)*|'|[-.(]+|\S\w*", message)
-	    else:
+                message = " ".join(str(e) for e in message)
+                message = message.lower()
+            else:
             	message = re.findall(r"\w+(?:['-/]\w+)|\w+[?!.,:)(]|\S\w*", message)
-            message = " ".join(str(e) for e in message)
+            	message = " ".join(str(e) for e in message)
             txtFile = out_txt + "/" +  pdf + ".txt"
             txtFile = open(txtFile, "w")
             txtFile.write(message)
@@ -84,11 +86,11 @@ def txt_process(in_pdf, out_txt, token): # process text
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input-dir", dest="inpdf", required=True, 
-            		help="Path to the input pdf files")
+                        help="Path to the input pdf files")
     parser.add_argument("-o", "--output-dir", dest="outtxt", required=True,
-            		help="Path for the output txt files")
+                        help="Path for the output txt files")
     parser.add_argument("-t", "--token-gen", dest="token", action="store_true",
-			help="Use flag to generate tokenized output")
+                        help="Use flag to generate tokenized output")
 
     args = parser.parse_args()
 
